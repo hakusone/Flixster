@@ -13,13 +13,27 @@ public class Movie {
     String overview;
     String backdropPath;
     String rating;
+    String posterBasePath;
+    String backdropBasePath;
+
+    public void setPosterBasePath(String baseUrl, String size) {
+        posterBasePath = baseUrl + size + "/%s";
+    }
+
+    public void setBackdropBasePath(String baseUrl, String size) {
+        backdropBasePath = baseUrl + size + "/%s";
+    }
 
     public String getPosterPath() {
-        return String.format("https://image.tmdb.org/t/p/w342/%s", posterPath);
+        if (posterBasePath != null)
+            return String.format(posterBasePath, posterPath);
+        return posterPath;
     }
 
     public String getBackdropPath() {
-        return String.format("https://image.tmdb.org/t/p/w780/%s", backdropPath);
+        if (backdropBasePath != null)
+            return String.format(backdropBasePath, backdropPath);
+        return backdropPath;
     }
 
     public Float getRating() {

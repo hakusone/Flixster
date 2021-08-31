@@ -22,8 +22,6 @@ import java.util.List;
 import okhttp3.Headers;
 
 public class MainActivity extends AppCompatActivity {
-
-    public static final String NOW_PLAYING_URL = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
     public static final String TAG = "MainActivity";
 
     List<Movie> movies;
@@ -46,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
         // set a layout manager on the recyler view
         rvMovies.setLayoutManager(new LinearLayoutManager(this));
 
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(NOW_PLAYING_URL, new JsonHttpResponseHandler() {
+        MoviesAPIClient client = new MoviesAPIClient();
+        JsonHttpResponseHandler loadMovies = new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.d(TAG, "onSuccess");
@@ -58,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     movies.addAll(Movie.fromJsonArray(results));
                     movieAdapter.notifyDataSetChanged();
                     Log.i(TAG, "Movies : " + movies.size());
-                } catch(JSONException e) {
+                } catch (JSONException e) {
                     Log.e(TAG, "Hit json exception", e);
                     e.printStackTrace();
                 }
@@ -68,6 +66,47 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                 Log.d(TAG, "onFailure");
             }
-        });
+        };
+
+        JsonHttpResponseHandler setupImageConfig = new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.d(TAG, "onSuccess");
+                JSONObject jsonObject = json.jsonObject;
+                try {
+                    JSONObject images = jsonObject.getJSONObject("images");
+                    String baseUrl = images.getString("secure_base_url");
+                    JSONArray posterSizes = images.getJSONArray("poster_sizes");
+                    JSONArray backdropSizes = images.getJSONArray("backdrop_sizes");
+
+                    // Get second to the last, the one that's not original
+                    String posterSize = posterSizes.getString(posterSizes.length() - 2);
+                    String backdropSize = backdropSizes.getString(backdropSizes.length() - 2);
+
+                    Log.i(TAG, "Secure Base URL : " + baseUrl);
+                    Log.i(TAG, "Poster Size : " + posterSize);
+                    Log.i(TAG, "Backdrop Size : " + backdropSize);
+
+                    for (Movie movie : movies) {
+                        movie.setPosterBasePath(baseUrl, posterSize);
+                        movie.setBackdropBasePath(baseUrl, backdropSize);
+                    }
+
+                    movieAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    Log.e(TAG, "Hit json exception", e);
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.d(TAG, "onFailure");
+            }
+        };
+
+        client.getNowPlayingMovies(loadMovies);
+        client.getConfiguration(setupImageConfig);
     }
+
 }
