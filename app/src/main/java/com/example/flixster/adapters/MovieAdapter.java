@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.flixster.R;
 import com.example.flixster.models.Movie;
 
@@ -87,7 +88,10 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 imageUrl = movie.getPosterPath();
             }
 
-            Glide.with(context).load(imageUrl).placeholder(R.drawable.ic_baseline_movie_24).into(vh1.getIvPoster());
+            Glide.with(context)
+                    .load(imageUrl)
+                    .placeholder(R.drawable.ic_baseline_movie_24)
+                    .into(vh1.getIvPoster());
         }
     }
 
@@ -95,7 +99,10 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         Movie movie = movies.get(position);
         String imageUrl = movie.getBackdropPath();
 
-        Glide.with(context).load(imageUrl).placeholder(R.drawable.ic_baseline_movie_24).into(vh2.getIvPoster());
+        Glide.with(context)
+                .load(imageUrl)
+                .placeholder(R.drawable.ic_baseline_movie_24)
+                .into(vh2.getIvPoster());
     }
 
     // return total count of items in the list
