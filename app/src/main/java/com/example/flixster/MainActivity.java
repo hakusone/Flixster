@@ -38,75 +38,15 @@ public class MainActivity extends AppCompatActivity {
         // create the adapter
         MovieAdapter movieAdapter = new MovieAdapter(this, movies);
 
-        // set the adapter on the recyler view
+        // set the adapter on the recycler view
         rvMovies.setAdapter(movieAdapter);
 
-        // set a layout manager on the recyler view
+        // set a layout manager on the recycler view
         rvMovies.setLayoutManager(new LinearLayoutManager(this));
 
         MoviesAPIClient client = new MoviesAPIClient();
-        JsonHttpResponseHandler loadMovies = new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.d(TAG, "onSuccess");
-                JSONObject jsonObject = json.jsonObject;
-                try {
-                    JSONArray results = jsonObject.getJSONArray("results");
-                    Log.i(TAG, "Results : " + results.toString());
-                    movies.addAll(Movie.fromJsonArray(results));
-                    movieAdapter.notifyDataSetChanged();
-                    Log.i(TAG, "Movies : " + movies.size());
-                } catch (JSONException e) {
-                    Log.e(TAG, "Hit json exception", e);
-                    e.printStackTrace();
-                }
-            }
 
-            @Override
-            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Log.d(TAG, "onFailure");
-            }
-        };
-
-        JsonHttpResponseHandler setupImageConfig = new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.d(TAG, "onSuccess");
-                JSONObject jsonObject = json.jsonObject;
-                try {
-                    JSONObject images = jsonObject.getJSONObject("images");
-                    String baseUrl = images.getString("secure_base_url");
-                    JSONArray posterSizes = images.getJSONArray("poster_sizes");
-                    JSONArray backdropSizes = images.getJSONArray("backdrop_sizes");
-
-                    // Get second to the last, the one that's not original
-                    String posterSize = posterSizes.getString(posterSizes.length() - 2);
-                    String backdropSize = backdropSizes.getString(backdropSizes.length() - 2);
-
-                    Log.i(TAG, "Secure Base URL : " + baseUrl);
-                    Log.i(TAG, "Poster Size : " + posterSize);
-                    Log.i(TAG, "Backdrop Size : " + backdropSize);
-
-                    for (Movie movie : movies) {
-                        movie.setPosterBasePath(baseUrl, posterSize);
-                        movie.setBackdropBasePath(baseUrl, backdropSize);
-                    }
-
-                    movieAdapter.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    Log.e(TAG, "Hit json exception", e);
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Log.d(TAG, "onFailure");
-            }
-        };
-
-        client.getNowPlayingMovies(loadMovies);
-        client.getConfiguration(setupImageConfig);
+        client.getNowPlayingMovies(movieAdapter, (ArrayList<Movie>) movies);
     }
 
 }

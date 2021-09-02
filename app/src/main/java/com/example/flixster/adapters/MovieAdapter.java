@@ -1,6 +1,7 @@
 package com.example.flixster.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,13 +14,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.flixster.MovieDetailsActivity;
 import com.example.flixster.R;
 import com.example.flixster.models.Movie;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    public static final String TAG = "MovieAdapter";
 
     Context context;
     List<Movie> movies;
@@ -34,7 +38,7 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     // returns the view type of the item at position for the purposes of view recycling.
     @Override
     public int getItemViewType(int position) {
-        if (this.movies.get(position).getRating() >= 8) {
+        if (this.movies.get(position).getVoteAverage() >= 8) {
             return POPULAR;
         }
         return REGULAR;
@@ -44,7 +48,7 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d("MovieAdapter", "onCreateViewHolder");
+        Log.d(TAG, "onCreateViewHolder");
         RecyclerView.ViewHolder viewHolder;
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -81,16 +85,19 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             // if phone in landscape, set image to backdrop
             if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE
-                    || movie.getRating() >= 8) {
+                    || movie.getVoteAverage() >= 8) {
                 imageUrl = movie.getBackdropPath();
             }
             else {
                 imageUrl = movie.getPosterPath();
             }
 
+            Log.d(TAG, imageUrl);
+
             Glide.with(context)
                     .load(imageUrl)
                     .placeholder(R.drawable.ic_baseline_movie_24)
+                    .error(R.drawable.ic_baseline_movie_24)
                     .into(vh1.getIvPoster());
         }
     }
@@ -99,9 +106,12 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         Movie movie = movies.get(position);
         String imageUrl = movie.getBackdropPath();
 
+        Log.d(TAG, imageUrl);
+
         Glide.with(context)
                 .load(imageUrl)
                 .placeholder(R.drawable.ic_baseline_movie_24)
+                .error(R.drawable.ic_baseline_movie_24)
                 .into(vh2.getIvPoster());
     }
 
@@ -111,7 +121,7 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return movies.size();
     }
 
-    public class ViewHolder1 extends RecyclerView.ViewHolder {
+    public class ViewHolder1 extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView tvTitle;
         private TextView tvOverview;
         private ImageView ivPoster;
@@ -145,10 +155,22 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvOverview = itemView.findViewById(R.id.tvOverview);
             ivPoster = itemView.findViewById(R.id.ivPoster);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int position = getBindingAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                Movie movie = movies.get(position);
+                Intent intent = new Intent(context, MovieDetailsActivity.class);
+                intent.putExtra(Movie.class.getSimpleName(), Parcels.wrap(movie));
+                context.startActivity(intent);
+            }
         }
     }
 
-    public class ViewHolder2 extends RecyclerView.ViewHolder {
+    public class ViewHolder2 extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView ivPoster;
 
         public ImageView getIvPoster() {
@@ -162,6 +184,17 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         public ViewHolder2(@NonNull View itemView) {
             super(itemView);
             ivPoster = itemView.findViewById(R.id.ivPoster);
+            itemView.setOnClickListener(this);
+        }
+
+        public void onClick(View v) {
+            int position = getBindingAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                Movie movie = movies.get(position);
+                Intent intent = new Intent(context, MovieDetailsActivity.class);
+                intent.putExtra(Movie.class.getSimpleName(), Parcels.wrap(movie));
+                context.startActivity(intent);
+            }
         }
     }
 }

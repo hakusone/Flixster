@@ -11,6 +11,7 @@
         android:roundIcon="@drawable/ic__141633_cinema_film_love_movie_romantic_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".MovieDetailsActivity"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true">
