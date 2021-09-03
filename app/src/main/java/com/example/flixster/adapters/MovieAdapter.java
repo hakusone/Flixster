@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.flixster.MovieDetailsActivity;
 import com.example.flixster.R;
 import com.example.flixster.models.Movie;
@@ -96,8 +97,8 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             Glide.with(context)
                     .load(imageUrl)
-                    .placeholder(R.drawable.ic_baseline_movie_24)
-                    .error(R.drawable.ic_baseline_movie_24)
+                    .apply(new RequestOptions()
+                            .placeholder(R.drawable.ic_baseline_movie_24))
                     .into(vh1.getIvPoster());
         }
     }
@@ -110,8 +111,8 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         Glide.with(context)
                 .load(imageUrl)
-                .placeholder(R.drawable.ic_baseline_movie_24)
-                .error(R.drawable.ic_baseline_movie_24)
+                .apply(new RequestOptions()
+                        .placeholder(R.drawable.ic_baseline_movie_24))
                 .into(vh2.getIvPoster());
     }
 
@@ -154,7 +155,7 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvOverview = itemView.findViewById(R.id.tvOverview);
-            ivPoster = itemView.findViewById(R.id.ivPoster);
+            ivPoster = itemView.findViewById(R.id.ivBackdrop);
             itemView.setOnClickListener(this);
         }
 
@@ -183,7 +184,7 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         public ViewHolder2(@NonNull View itemView) {
             super(itemView);
-            ivPoster = itemView.findViewById(R.id.ivPoster);
+            ivPoster = itemView.findViewById(R.id.ivBackdrop);
             itemView.setOnClickListener(this);
         }
 

@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         // set a layout manager on the recycler view
         rvMovies.setLayoutManager(new LinearLayoutManager(this));
 
-        MoviesAPIClient client = new MoviesAPIClient();
+        MoviesAPIClient client = new MoviesAPIClient(getString(R.string.themoviedb_api_key));
 
         client.getNowPlayingMovies(movieAdapter, (ArrayList<Movie>) movies);
     }

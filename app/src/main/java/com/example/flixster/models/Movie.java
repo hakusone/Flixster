@@ -17,13 +17,27 @@ public class Movie {
     String rating;
     String posterBasePath;
     String backdropBasePath;
+    String videoId;
+    String id;
+
+    public String getVideoId() {
+        return videoId;
+    }
+
+    public void setVideoId(String videoId) {
+        this.videoId = videoId;
+    }
+
+    public String getId() {
+        return id;
+    }
 
     public void setPosterBasePath(String baseUrl, String size) {
-        posterBasePath = baseUrl + size + "/%s";
+        posterBasePath = baseUrl + size + "%s";
     }
 
     public void setBackdropBasePath(String baseUrl, String size) {
-        backdropBasePath = baseUrl + size + "/%s";
+        backdropBasePath = baseUrl + size + "%s";
     }
 
     public String getPosterPath() {
@@ -58,6 +72,7 @@ public class Movie {
         overview = jsonObject.getString("overview");
         backdropPath = jsonObject.getString("backdrop_path");
         rating = jsonObject.getString("vote_average");
+        id = jsonObject.getString("id");
     }
 
     public static List<Movie> fromJsonArray(JSONArray movieJsonArray) throws JSONException {

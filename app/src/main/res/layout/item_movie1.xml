@@ -8,7 +8,7 @@
     android:padding="10dp">
 
     <ImageView
-        android:id="@+id/ivPoster"
+        android:id="@+id/ivBackdrop"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginStart="5dp"
-        android:layout_toEndOf="@+id/ivPoster"
+        android:layout_toEndOf="@+id/ivBackdrop"
         android:textColor="@color/teal_200"
         android:textSize="24sp"
         tools:text="The Suicide Squad" />
@@ -35,7 +35,7 @@
         android:layout_below="@+id/tvTitle"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/ivPoster"
+        android:layout_toEndOf="@+id/ivBackdrop"
         android:textColor="@color/teal_700"
         tools:text="Supervillains Harley Quinn, Bloodsport, Peacemaker and a collection of nutty cons at Belle Reve prison join the super-secret, super-shady Task Force X as they are dropped off at the remote, enemy-infused island of Corto Maltese." />
 

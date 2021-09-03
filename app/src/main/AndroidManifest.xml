@@ -4,6 +4,12 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <queries>
+        <intent>
+            <action android:name="com.google.android.youtube.api.service.START" />
+        </intent>
+    </queries>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic__141633_cinema_film_love_movie_romantic_icon"
@@ -11,7 +17,10 @@
         android:roundIcon="@drawable/ic__141633_cinema_film_love_movie_romantic_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MovieDetailsActivity"></activity>
+        <activity
+            android:name=".MovieTrailerActivity"
+            android:exported="true" />
+        <activity android:name=".MovieDetailsActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
