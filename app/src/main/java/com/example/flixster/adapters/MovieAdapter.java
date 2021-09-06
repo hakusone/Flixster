@@ -1,5 +1,6 @@
 package com.example.flixster.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -11,12 +12,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.flixster.MovieDetailsActivity;
 import com.example.flixster.R;
+import com.example.flixster.databinding.ItemMovie1Binding;
+import com.example.flixster.databinding.ItemMovie2Binding;
 import com.example.flixster.models.Movie;
 
 import org.parceler.Parcels;
@@ -54,12 +58,14 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         LayoutInflater inflater = LayoutInflater.from(context);
 
         if (viewType == POPULAR) {
-            View v2 = inflater.inflate(R.layout.item_movie2, parent, false);
-            viewHolder = new ViewHolder2(v2);
+            ItemMovie2Binding item2Binding =
+                    ItemMovie2Binding.inflate(inflater, parent, false);
+            viewHolder = new ViewHolder2(item2Binding);
         }
         else {
-            View v1 = inflater.inflate(R.layout.item_movie1, parent, false);
-            viewHolder = new ViewHolder1(v1);
+            ItemMovie1Binding item1Binding =
+                    ItemMovie1Binding.inflate(inflater, parent, false);
+            viewHolder = new ViewHolder1(item1Binding);
         }
 
         return viewHolder;
@@ -67,53 +73,18 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        Movie movie = movies.get(position);
+
         if (holder.getItemViewType() == POPULAR) {
             ViewHolder2 vh2 = (ViewHolder2) holder;
-            configureViewHolder2(vh2, position);
+            vh2.binding.setMovie(movie);
+            vh2.binding.executePendingBindings();
         }
         else {
             ViewHolder1 vh1 = (ViewHolder1) holder;
-            configureViewHolder1(vh1, position);
+            vh1.binding.setMovie(movie);
+            vh1.binding.executePendingBindings();
         }
-    }
-
-    private void configureViewHolder1(ViewHolder1 vh1, int position) {
-        Movie movie = movies.get(position);
-        if (movie != null) {
-            vh1.getTvTitle().setText(movie.getTitle());
-            vh1.getTvOverview().setText(movie.getOverview());
-            String imageUrl;
-
-            // if phone in landscape, set image to backdrop
-            if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE
-                    || movie.getVoteAverage() >= 8) {
-                imageUrl = movie.getBackdropPath();
-            }
-            else {
-                imageUrl = movie.getPosterPath();
-            }
-
-            Log.d(TAG, imageUrl);
-
-            Glide.with(context)
-                    .load(imageUrl)
-                    .apply(new RequestOptions()
-                            .placeholder(R.drawable.ic_baseline_movie_24))
-                    .into(vh1.getIvPoster());
-        }
-    }
-
-    private void configureViewHolder2(ViewHolder2 vh2, int position) {
-        Movie movie = movies.get(position);
-        String imageUrl = movie.getBackdropPath();
-
-        Log.d(TAG, imageUrl);
-
-        Glide.with(context)
-                .load(imageUrl)
-                .apply(new RequestOptions()
-                        .placeholder(R.drawable.ic_baseline_movie_24))
-                .into(vh2.getIvPoster());
     }
 
     // return total count of items in the list
@@ -123,45 +94,18 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     public class ViewHolder1 extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView tvTitle;
-        private TextView tvOverview;
-        private ImageView ivPoster;
+        final ItemMovie1Binding binding;
 
-        public TextView getTvTitle() {
-            return tvTitle;
-        }
-
-        public void setTvTitle(TextView tvTitle) {
-            this.tvTitle = tvTitle;
-        }
-
-        public TextView getTvOverview() {
-            return tvOverview;
-        }
-
-        public void setTvOverview(TextView tvOverview) {
-            this.tvOverview = tvOverview;
-        }
-
-        public ImageView getIvPoster() {
-            return ivPoster;
-        }
-
-        public void setIvPoster(ImageView ivPoster) {
-            this.ivPoster = ivPoster;
-        }
-
-        public ViewHolder1(@NonNull View itemView) {
-            super(itemView);
-            tvTitle = itemView.findViewById(R.id.tvTitle);
-            tvOverview = itemView.findViewById(R.id.tvOverview);
-            ivPoster = itemView.findViewById(R.id.ivBackdrop);
+        public ViewHolder1(ItemMovie1Binding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             int position = getBindingAdapterPosition();
+            Log.d(TAG, "position: " + Integer.toString(position));
             if (position != RecyclerView.NO_POSITION) {
                 Movie movie = movies.get(position);
                 Intent intent = new Intent(context, MovieDetailsActivity.class);
@@ -172,24 +116,17 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     public class ViewHolder2 extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ImageView ivPoster;
+        final ItemMovie2Binding binding;
 
-        public ImageView getIvPoster() {
-            return ivPoster;
-        }
-
-        public void setIvPoster(ImageView ivPoster) {
-            this.ivPoster = ivPoster;
-        }
-
-        public ViewHolder2(@NonNull View itemView) {
-            super(itemView);
-            ivPoster = itemView.findViewById(R.id.ivBackdrop);
+        public ViewHolder2(ItemMovie2Binding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
             itemView.setOnClickListener(this);
         }
 
         public void onClick(View v) {
             int position = getBindingAdapterPosition();
+            Log.d(TAG, "position: " + Integer.toString(position));
             if (position != RecyclerView.NO_POSITION) {
                 Movie movie = movies.get(position);
                 Intent intent = new Intent(context, MovieDetailsActivity.class);

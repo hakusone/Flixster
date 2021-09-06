@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -56,7 +57,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 .apply(new RequestOptions()
                         .placeholder(R.drawable.ic_baseline_movie_24))
                 .into(ivBackdrop);
-
 
         ivBackdrop.setOnClickListener(new View.OnClickListener() {
             @Override

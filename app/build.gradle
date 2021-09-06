@@ -5,6 +5,9 @@ plugins {
 android {
     compileSdk 31
 
+    dataBinding.enabled = true
+
+
     defaultConfig {
         applicationId "com.example.flixster"
         minSdk 21
