@@ -89,7 +89,7 @@ public class Movie {
         rating = jsonObject.getString("vote_average");
         id = jsonObject.getString("id");
         releaseDate = jsonObject.getString("release_date");
-        popularity = jsonObject.getString("popularity");
+        popularity = String.valueOf(Math.round(Float.parseFloat(jsonObject.getString("popularity"))));
         voteCount = jsonObject.getString("vote_count");
     }
 

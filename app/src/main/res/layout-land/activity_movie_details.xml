@@ -82,6 +82,7 @@
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@+id/ivBackdrop"
             android:text='@{"Released " + movie.releaseDate}'
+            tools:text="Released 2021-07-08"
             android:textColor="@color/teal_700" />
 
         <ImageView
@@ -98,6 +99,19 @@
             android:layout_marginBottom="40dp"
             app:preview="@{movie.videoId}"
             app:srcCompat="@drawable/ic_baseline_ondemand_video_24" />
+
+
+        <TextView
+            android:id="@+id/tvPopularity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvReleaseDate"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/ivBackdrop"
+            android:text='@{"Popularity: " + movie.popularity}'
+            android:textColor="@color/teal_700"
+            tools:text="Popularity: 5050" />
 
 
     </RelativeLayout>
