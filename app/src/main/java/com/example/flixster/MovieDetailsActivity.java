@@ -11,9 +11,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.databinding.DataBindingUtil;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.flixster.databinding.ActivityMovieDetailsBinding;
 import com.example.flixster.models.Movie;
 
 import org.parceler.Parcels;
@@ -22,43 +24,24 @@ import org.w3c.dom.Text;
 public class MovieDetailsActivity extends AppCompatActivity {
 
     public static final String TAG = "MovieDetailsActivity";
+    private ActivityMovieDetailsBinding binding;
     Movie movie;
 
-    TextView tvTitle;
-    TextView tvOverview;
-    RatingBar rbVoteAverage;
     ImageView ivBackdrop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_details);
-        ivBackdrop = (ImageView) findViewById(R.id.ivBackdrop);
-        tvTitle = (TextView) findViewById(R.id.tvTitle);
-        tvOverview = (TextView) findViewById(R.id.tvOverview);
-        rbVoteAverage = (RatingBar) findViewById(R.id.rbVoteAverage);
-
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_details);
         movie = (Movie) Parcels.unwrap(getIntent().getParcelableExtra(Movie.class.getSimpleName()));
+        binding.setMovie(movie);
         Log.d(TAG, String.format("Showing details for '%s'", movie.getTitle()));
 
-        tvTitle.setText(movie.getTitle());
-        tvOverview.setText(movie.getOverview());
-
         Float voteAverage = movie.getVoteAverage() / 2;
-        rbVoteAverage.setRating(voteAverage);
+        binding.rbVoteAverage.setRating(voteAverage);
         Log.d(TAG, String.valueOf(voteAverage));
 
-        String imageUrl = movie.getBackdropPath();
-
-        Log.d(TAG, imageUrl);
-
-        Glide.with(this)
-                .load(imageUrl)
-                .apply(new RequestOptions()
-                        .placeholder(R.drawable.ic_baseline_movie_24))
-                .into(ivBackdrop);
-
-        ivBackdrop.setOnClickListener(new View.OnClickListener() {
+        binding.ivBackdrop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "videoid" + movie.getVideoId());

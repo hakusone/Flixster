@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable name="movie" type="com.example.flixster.models.Movie"/>
         <variable name="vh1" type="com.example.flixster.adapters.MovieAdapter.ViewHolder1"/>
     </data>
     <RelativeLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,13 +15,13 @@
         <ImageView
             android:id="@+id/ivBackdrop"
             android:layout_width="120dp"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
-            tools:srcCompat="@tools:sample/avatars"
-            app:imageUrl= "@{movie.posterPath}"/>
+            app:imageUrl="@{movie.posterPath}"
+            tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/tvTitle"

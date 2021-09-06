@@ -1,37 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable name="movie" type="com.example.flixster.models.Movie"/>
     </data>
+
     <RelativeLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/black">
 
         <ImageView
             android:id="@+id/ivBackdrop"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:transitionName="backdrop"
-            tools:srcCompat="@tools:sample/avatars"
-            app:imageUrl= "@{movie.backdropPath}"/>
+            app:imageUrl="@{movie.backdropPath}"
+            tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ivBackdrop"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="0dp"
+            android:text='@{movie.title}'
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/teal_200"
             android:textSize="24sp"
-            android:text='@{movie.title}'
             tools:text="The Suicide Squad" />
 
         <TextView
@@ -44,8 +48,8 @@
             android:layout_marginStart="0dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="0dp"
-            android:textColor="@color/teal_700"
             android:text='@{movie.overview}'
+            android:textColor="@color/teal_700"
             tools:text="Supervillains Harley Quinn, Bloodsport, Peacemaker and a collection of nutty cons at Belle Reve prison join the super-secret, super-shady Task Force X as they are dropped off at the remote, enemy-infused island of Corto Maltese." />
 
         <RatingBar
