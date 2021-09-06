@@ -62,5 +62,43 @@
             android:textColor="@color/teal_700"
             tools:text="Supervillains Harley Quinn, Bloodsport, Peacemaker and a collection of nutty cons at Belle Reve prison join the super-secret, super-shady Task Force X as they are dropped off at the remote, enemy-infused island of Corto Maltese." />
 
+        <TextView
+            android:id="@+id/tvVotes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvTitle"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="15dp"
+            android:layout_toEndOf="@+id/rbVoteAverage"
+            android:text='@{movie.voteCount + " votes"}'
+            android:textColor="@color/teal_700" />
+
+        <TextView
+            android:id="@+id/tvReleaseDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvOverview"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/ivBackdrop"
+            android:text='@{"Released " + movie.releaseDate}'
+            android:textColor="@color/teal_700" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignStart="@+id/ivBackdrop"
+            android:layout_alignTop="@+id/ivBackdrop"
+            android:layout_alignEnd="@+id/ivBackdrop"
+            android:layout_alignBottom="@+id/ivBackdrop"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="40dp"
+            app:preview="@{movie.videoId}"
+            app:srcCompat="@drawable/ic_baseline_ondemand_video_24" />
+
+
     </RelativeLayout>
 </layout>

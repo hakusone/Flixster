@@ -41,16 +41,24 @@ public class MovieDetailsActivity extends AppCompatActivity {
         binding.rbVoteAverage.setRating(voteAverage);
         Log.d(TAG, String.valueOf(voteAverage));
 
+        if (movie.getVoteAverage() >= 8) {
+            openVideo();
+        }
+
         binding.ivBackdrop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "videoid" + movie.getVideoId());
-                if (movie.getVideoId() != null) {
-                    Intent intent = new Intent(MovieDetailsActivity.this, MovieTrailerActivity.class);
-                    intent.putExtra("videoId", movie.getVideoId());
-                    MovieDetailsActivity.this.startActivity(intent);
-                }
+                openVideo();
             }
         });
+    }
+
+    protected void openVideo() {
+        if (movie.getVideoId() != null) {
+            Intent intent = new Intent(MovieDetailsActivity.this, MovieTrailerActivity.class);
+            intent.putExtra("videoId", movie.getVideoId());
+            MovieDetailsActivity.this.startActivity(intent);
+        }
     }
 }

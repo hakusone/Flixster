@@ -1,5 +1,6 @@
 package com.example.flixster;
 
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.databinding.BindingAdapter;
@@ -16,5 +17,14 @@ public class BindingAdapterUtils {
                 .placeholder(R.drawable.ic_baseline_movie_24)
                 .transform(new CenterInside(), new RoundedCorners(20))
                 .into(view);
+    }
+    @BindingAdapter({"bind:preview"})
+    public static void loadPreview(ImageView view, String url) {
+        if (url != null) {
+            view.setVisibility(View.VISIBLE);
+        }
+        else {
+            view.setVisibility(View.INVISIBLE);
+        }
     }
 }

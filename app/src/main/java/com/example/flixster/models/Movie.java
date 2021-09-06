@@ -19,6 +19,21 @@ public class Movie {
     String backdropBasePath;
     String videoId;
     String id;
+    String releaseDate;
+    String popularity;
+    String voteCount;
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public String getPopularity() {
+        return popularity;
+    }
+
+    public String getVoteCount() {
+        return voteCount;
+    }
 
     public String getVideoId() {
         return videoId;
@@ -73,6 +88,9 @@ public class Movie {
         backdropPath = jsonObject.getString("backdrop_path");
         rating = jsonObject.getString("vote_average");
         id = jsonObject.getString("id");
+        releaseDate = jsonObject.getString("release_date");
+        popularity = jsonObject.getString("popularity");
+        voteCount = jsonObject.getString("vote_count");
     }
 
     public static List<Movie> fromJsonArray(JSONArray movieJsonArray) throws JSONException {

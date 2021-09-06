@@ -65,5 +65,44 @@
             android:isIndicator="true"
             android:numStars="5"
             android:stepSize="0.5" />
+
+
+        <TextView
+            android:id="@+id/tvVotes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvTitle"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@+id/rbVoteAverage"
+            android:text='@{movie.voteCount + " votes"}'
+            android:textColor="@color/teal_700" />
+
+        <TextView
+            android:id="@+id/tvReleaseDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvOverview"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="5dp"
+            android:text='@{"Released " + movie.releaseDate}'
+            android:textColor="@color/teal_700"/>
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignStart="@+id/ivBackdrop"
+            android:layout_alignTop="@+id/ivBackdrop"
+            android:layout_alignBottom="@+id/ivBackdrop"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="120dp"
+            android:layout_marginBottom="40dp"
+            app:preview="@{movie.videoId}"
+            app:srcCompat="@drawable/ic_baseline_ondemand_video_24" />
+
     </RelativeLayout>
 </layout>

@@ -114,9 +114,20 @@ public class MoviesAPIClient {
                 try {
                     JSONArray results = jsonObject.getJSONArray("results");
                     if (results.length() > 0) {
-                        JSONObject firstResult = (JSONObject) results.get(0);
-                        String videoId = firstResult.getString("key");
-                        movie.setVideoId(videoId);
+                        for (int i = 0; i < results.length(); i++) {
+                            JSONObject obj = (JSONObject) results.get(i);
+                            if (obj.getString("site").equals("YouTube")
+                            && obj.getString("type").equals("Trailer")) {
+                                Log.d(TAG, obj.getString("key"));
+                                movie.setVideoId(obj.getString("key"));
+                                break;
+                            }
+                        }
+                        if (movie.getVideoId() == null) {
+                            JSONObject firstResult = (JSONObject) results.get(0);
+                            String videoId = firstResult.getString("key");
+                            movie.setVideoId(videoId);
+                        }
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, "Hit json exception", e);
