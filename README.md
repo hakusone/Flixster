@@ -22,13 +22,31 @@ Flix is an app that allows users to browse movies from the [The Movie Database A
 
 ### App Walkthough GIF
 
-`TODO://` Add the URL to your animated app walkthough `gif` in the image tag below, `YOUR_GIF_URL_HERE`. Make sure the gif actually renders and animates when viewing this README. (🚫 Remove this paragraph after after adding gif)
+<img src='walkthrough.gif' title='Video Walkthrough Popular' width='400' alt='Video Walkthrough Popular' />
 
-<img src="YOUR_GIF_URL_HERE" width=250><br>
+<img src='walkthrough_landscape_nonpopular.gif' title='Video Walkthrough Landscape Nonpopular' width='400' alt='Video Walkthrough Landscape Nonpopular' />
+
+Gifs created with [Kap](https://getkap.co/)
 
 ### Notes
 
-Describe any challenges encountered while building the app.
+I couldn't find a lot of recent examples for Android Studio and how it interacts with Youtube API Player. Eventually I found out how to force the video into landscape mode every time and how to instantly play it (using the `loadVideo` instead of `cueVideo` function), but I couldn't find a coherent explanation on how to make a custom fullscreen layout. In any case, the YoutubeVideoPlayer works best if the app was in landscape mode already. Portrait mode expanding into full screen experienced a lot of hiccups. 
+
+Working with the Youtube API Player was a little frustrating. Sometimes, it would suddenly stop working, reporting an initialization error that ended up being "fixed" if I removed the youtube service start query in the manifest, quit the app, put the query back in, and restarted the app. Other times, some videos would be stuck on a perpetually black processing screen and I had to restart the app to try to get it to load, while other videos (the popular videos) actually worked.
+
+A note about Glide Transformations: the most recent version of Glide handles a number of transformations without the need for the additional library. The implementation looks like this:
+
+```
+Glide.with(view.getContext())
+.load(url)
+.placeholder(R.drawable.ic_baseline_movie_24)
+.transform(new CenterInside(), new RoundedCorners(20))
+.into(view);
+```
+
+I initially used the library recommended in the guides but found out it added a lot of unnecessary padding/margins on my image and ended up discovering that the Glide library supported Rounded Corners in a cleaner way.
+
+I really liked data binding and implemented it to some degree to cut down the number of `findViewById` I used, but when it came to trying to do events/listeners data-binding, I couldn't figure out a good way to convert my implementation of the onClick events into handlers I could extract to another file or move to MovieAdapter, because the event needed to be executed in context of the ViewHolders. A lot of the examples I ended up finding weren't RecyclerViews (much less with multiple ViewHolders) or used Kotlin.
 
 ## Open-source libraries used
 - [Android Async HTTP](https://github.com/codepath/CPAsyncHttpClient) - Simple asynchronous HTTP requests with JSON parsing

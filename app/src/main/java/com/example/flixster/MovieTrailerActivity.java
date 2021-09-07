@@ -18,7 +18,6 @@ public class MovieTrailerActivity extends YouTubeBaseActivity {
         setContentView(R.layout.activity_movie_trailer);
 
         videoId = getIntent().getStringExtra("videoId");
-        boolean instantPlay = getIntent().getBooleanExtra("instantPlay", false);
 
         YouTubePlayerView youTubePlayerView =
                 (YouTubePlayerView) findViewById(R.id.player);
@@ -30,12 +29,7 @@ public class MovieTrailerActivity extends YouTubeBaseActivity {
                                                         YouTubePlayer youTubePlayer, boolean b) {
                         if (!b) {
                             youTubePlayer.setFullscreen(true);
-                            if (instantPlay) {
-                                youTubePlayer.loadVideo(videoId);
-                            }
-                            else {
-                                youTubePlayer.cueVideo(videoId);
-                            }
+                            youTubePlayer.loadVideo(videoId);
                         }
                     }
                     @Override
