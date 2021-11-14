@@ -18,11 +18,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MovieTrailerActivity"
+            android:name=".activities.MovieTrailerActivity"
             android:exported="true" />
-        <activity android:name=".MovieDetailsActivity" />
+        <activity android:name=".activities.MovieDetailsActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -3,23 +3,16 @@ package com.example.flixster.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.flixster.MainActivity;
-import com.example.flixster.MovieDetailsActivity;
-import com.example.flixster.R;
+import com.example.flixster.activities.MovieDetailsActivity;
 import com.example.flixster.databinding.ItemMovie1Binding;
 import com.example.flixster.databinding.ItemMovie2Binding;
 import com.example.flixster.models.Movie;

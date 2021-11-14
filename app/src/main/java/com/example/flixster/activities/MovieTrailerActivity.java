@@ -1,8 +1,9 @@
-package com.example.flixster;
+package com.example.flixster.activities;
 
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.flixster.R;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
